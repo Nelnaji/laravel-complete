@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Barryvdh\Debugbar\Facades\Debugbar;
 
@@ -15,9 +15,7 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 |
 */
 
-Route::get('/', function () {
-  Debugbar::info('INFO!');
-    return view('welcome');
-});
+Route::resource('blog', PostController::class);
 
+// Route for the invoke method
 

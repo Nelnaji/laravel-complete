@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -15,23 +16,38 @@ OPTIONS = Ask the server which vers are allowed
 */
 
 // GET
-Route::get('blog', [PostController::class,'index']);
-Route::get('blog/{id}', [PostController::class,'show']);
+// Route::get('blog', [PostController::class,'index'])->name('blog.index');
+// Route::get('blog/{id}', [PostController::class,'show'])->name('blog.show');
+
+// // POST
+// Route::get('blog/create', [PostController::class,'create'])->name('blog.create');
+// Route::post('blog', [PostController::class,'store'])->name('blog.store');
+
+// // PUT OR PATCH
+// Route::get('blog/edit/{id}', [PostController::class,'edit'])->name('blog.edit');
+// Route::patch('blog/{id}', [PostController::class,'update'])->name('blog.update');
+
+// // DELETE
+// Route::delete('blog/{id}', [PostController::class,'destroy'])->name('blog.destroy');
+
+
+
+
+Route::prefix('blog')->group(function(){
+    Route::get('', [PostController::class,'index'])->name('blog.index');
+Route::get('/{id}', [PostController::class,'show'])->name('blog.show');
 
 // POST
-Route::get('blog/create', [PostController::class,'create']);
-Route::post('blog', [PostController::class,'store']);
+Route::get('/create', [PostController::class,'create'])->name('blog.create');
+Route::post('/', [PostController::class,'store'])->name('blog.store');
 
 // PUT OR PATCH
-Route::get('blog/edit/{id}', [PostController::class,'edit']);
-Route::patch('blog/{id}', [PostController::class,'update']);
+Route::get('/edit/{id}', [PostController::class,'edit'])->name('blog.edit');
+Route::patch('/{id}', [PostController::class,'update'])->name('blog.update');
 
 // DELETE
-Route::delete('blog/{id}', [PostController::class,'destroy']);
-
-
-
-
+Route::delete('/{id}', [PostController::class,'destroy'])->name('blog.destroy');
+});
 
 // Route::resource('blog', PostController::class);
 
@@ -56,3 +72,9 @@ Route::get('/', HomeController::class);
 
 // Route for the invoke method
 
+
+
+
+// fallback route
+
+Route::fallback(FallbackController::class);
